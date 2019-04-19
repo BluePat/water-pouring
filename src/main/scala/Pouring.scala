@@ -23,13 +23,12 @@ class Pouring(capacity: Vector[Int]) {
 
   private val glasses = capacity.indices
 
-  val moves =
+  val moves: IndexedSeq[Move] =
     (for (g <- glasses) yield Empty(g)) ++
       (for (g <- glasses) yield Fill(g)) ++
       (for (from <- glasses; to <- glasses if from != to) yield Pour(from, to))
 
   // PATHS
-
   class Path(history: List[Move], val endState: State) {
     def extend(move: Move) = new Path(move :: history, move change endState)
     override def toString: String = (history.reverse mkString " ") + "--> " + endState
